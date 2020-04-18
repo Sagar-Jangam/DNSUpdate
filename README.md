@@ -1,17 +1,17 @@
 # DNSUpdate
 
-A script to aid Responder to gather:
+A script to aid Responder in gathering:
  - more hashes
  - hashes from different VLANs
  
- by updating DNS entries (with access to a low privilege user account).  
+ by updating DNS entries.
 
 # Overview
 
 By default Windows ADIDNS (Active Directory Integrated DNS) zones allow unprivileged authenticated users to add/ modify/ delete DNS entries. Using this any user account in the AD can add new DNS records. 
 
-- The script can be used to analyse Responder's logs in analyze mode to identify records which have be requested by multiple hosts, these records are highly likely to be requested by hosts in other VLANs as well. Thus modifying the zones with these records (and pointing to Responder's IP) may allow us to gather hashes from different VLANs. 
-- The script also allows us to add Wildcard DNS records which makes DNS works just as LLMNR and NBNS (which means all unresolved records would use the wildcard record and thus resolve to Responder's IP). 
+- The script can be used to with Responder's logs in analyze mode to identify records which have been requested by multiple hosts. These records are likely to be requested by hosts in other VLANs. Thus modifying the zones with these records (and pointing to Responder's IP) may allow us to gather hashes from different VLANs.
+- The script can also be used to add Wildcard DNS records which makes DNS works just as LLMNR and NBNS (which means all unresolved records would fall down to the wildcard record and thus resolve to Responder's IP). 
 
 **Note: Adding Wildcard records may cause disruptions in the network, as a precuationary measure wildcard records should be added to last zones.**
 
