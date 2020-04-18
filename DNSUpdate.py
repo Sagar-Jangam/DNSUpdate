@@ -90,7 +90,7 @@ if args.user is not None:
     if args.password is None:
         args.password = getpass.getpass()
 else:
-    print("Enter username/ password other options, Check help with -h, --help")
+    print("Enter username/ password other options, Check help")
     sys.exit(1)
 
 #Check the required arguments
