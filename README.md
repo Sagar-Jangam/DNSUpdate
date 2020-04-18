@@ -1,17 +1,17 @@
 # DNSUpdate
 
-A script to aid Responder in gathering:
- - more hashes
- - hashes from different VLANs
- 
- by updating DNS entries.
+A python script to aid Responder in gathering more hashes even from different VLANs, which by default is not possible with Responder. The scripts does so by updating DNS entries in ADIDNS zones. The script requires a set of valid domain credentials to update the ADIDNS zones.
+
+This could be helpful in the following scenarios:
+- when LLMNR and NBNS are disabled | we can point the unresolved records to Responder's IP directly
+- when admins are in different VLAN | we can add records to DNS which would allow us to gather hashes bypassing the broadcasting limitation
 
 # Overview
 
-By default Windows ADIDNS (Active Directory Integrated DNS) zones allow unprivileged authenticated users to add/ modify/ delete DNS entries. Using this any user account in the AD can add new DNS records. 
+By default Windows ADIDNS (Active Directory Integrated DNS) zones allow any authenticated users to add/ modify/ delete DNS entries. Using this any user account in the AD can add new DNS records. 
 
-- The script can be used to with Responder's logs in analyze mode to identify records which have been requested by multiple hosts. These records are likely to be requested by hosts in other VLANs. Thus modifying the zones with these records (and pointing to Responder's IP) may allow us to gather hashes from different VLANs.
-- The script can also be used to add Wildcard DNS records which makes DNS works just as LLMNR and NBNS (which means all unresolved records would fall down to the wildcard record and thus resolve to Responder's IP). 
+- The script can be used with Responder's logs in analyze mode to identify records which have been requested by multiple hosts. These records are likely to be requested by hosts in other VLANs as well. Thus modifying the zones with these records (and pointing to Responder's IP) may allow us to gather hashes from different VLANs.
+- The script can also be used to add Wildcard DNS records which makes DNS works just as LLMNR and NBNS (which means all unresolved records would fall down to the wildcard record and thus resolve to Responder's IP).
 
 **Note: Adding Wildcard records may cause disruptions in the network, as a precuationary measure wildcard records should be added to last zones.**
 
@@ -23,6 +23,7 @@ The script right now is not capable of adding WPAD records thus trying that migh
 - Install the requirements via pip
 
 # Usage
+Run the script with a set of credentials and a unresoloved record to be added to DNS zones, pointing the record to Responder's IP.
 ```
 $ python3 DNSUpdate.py --help
 usage: DNSUpdate.py [-h] [-DNS DNS] [-u USER] [-p PASSWORD] [-a ACTION] [-r RECORD] [-d DATA]
