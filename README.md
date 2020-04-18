@@ -1,3 +1,5 @@
+# DNSUpdate
+
 A script to aid Responder to gather:
  - more hashes
  - hashes from different VLANs
