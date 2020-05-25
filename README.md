@@ -35,7 +35,7 @@ Add/ Remove DNS records for an effective pawning with responder
 optional arguments:
   -h, --help            show this help message and exit
   -DNS DNS              IP address of the DNS server/ Domain Controller to connect to
-  -u USER, --user USER  Domain\Username for authentication.
+  -u USER, --user USER  Domain\Username (User/ Machine account) for authentication.
   -p PASSWORD, --password PASSWORD
                         Password or LM:NTLM hash, will prompt if not specified
   -a ACTION, --action ACTION
