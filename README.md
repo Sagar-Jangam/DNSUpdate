@@ -1,9 +1,9 @@
 # DNSUpdate
 
-A python script to aid Responder in gathering more hashes even from different VLANs, which by default is not possible with Responder. The scripts does so by updating DNS entries in ADIDNS zones. The script requires a set of valid domain credentials(User account/ Machine account) to update the ADIDNS zones.
+A python script to aid Responder in gathering more hashes even from different VLANs, which by default is not possible with Responder. The scripts does so by updating DNS entries in ADIDNS zones. The script requires a set of valid domain credentials (User account/ Machine account with a password or **hash**) to update the ADIDNS zones.
 
 This could be helpful in the following scenarios:
-- gathered a machine account instead of a user account
+- access to a machine account instead of a user account
 - when LLMNR and NBNS are disabled | we can point the unresolved records to Responder's IP directly
 - when admins are in different VLAN | we can add records to DNS which would allow us to gather hashes bypassing the broadcasting limitation
 
